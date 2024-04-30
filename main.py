@@ -1,14 +1,7 @@
-def biseccion():
-    print("Metodo de la biseccion...")
-    
-def falsaPosicion():
-    print("Metodo de la falsa posicion...")
-
-def newtonRaphson():
-    print("Metodo de newton raphson...")
-
-def secante():
-    print("Metodo de la secante...")
+from biseccion import biseccion
+from falsaPosicion import falsaPosicion
+from newtonRaphson import newtonRaphson
+from secante import secante
 
 opciones = {
     1: {
