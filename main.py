@@ -5,6 +5,7 @@ import secante as sec
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import math
 
 
 f = ""
