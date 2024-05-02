@@ -123,10 +123,9 @@ while opcion[0] != 0:
                 imprimirMetodos()
                 opcion[2] = int(input("\n Ingrese su eleccion: "))
                 os.system('cls')
-                if(opcion[2]!=0 and opcion[2]!=3):
+                if(opcion[2]!=0):
                     opciones[opcion[0]]['submenus'][opcion[1]]['funciones'][opcion[2]](f)
-                elif(opcion[2] == 3):
-                    editarFuncion()
-                        
-                        
 
+                        
+                        
+    
