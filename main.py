@@ -43,7 +43,7 @@ def editarFuncion():
     
 opciones = {
     1: {
-        "nombre": "Metodos abiertos",
+        "nombre": "Metodos cerrados",
         "submenus": {
             1: {
                 "nombre": "Metodo de la bisección           ", 
@@ -62,7 +62,7 @@ opciones = {
         }
     },
     2: {
-        "nombre": "Metodos cerrados",
+        "nombre": "Metodos abiertos",
         "submenus": {
             1:{
                 "nombre": "Metodo de Newton-Raphson         ", 
