@@ -4,13 +4,33 @@ import os
 import getpass
 
 
-xl = 0.5
-xu = 2.5
+xl = -10
+xu = 10
 errorMax = 1
 iterMax = 10
 
 def grafica(f):
     global xl, xu, errorMax, iterMax
+    imprimir()
+    v = input("DESEA EDITAR LOS VALORES INICIALES (s): ")
+    if(v.upper()=="S"):
+        os.system("cls")
+        imprimir()
+        temp = input("Ingrese el límite inferior o presione enter para dejarlo igual: ")
+        xl = float(str(xl) if(temp=="") else temp)
+        os.system("cls")
+        imprimir()
+        temp = input("Ingrese el límite superior o presione enter para dejarlo igual: ")
+        xu = float(str(xu) if(temp=="") else temp)
+        os.system("cls")
+        imprimir()
+        temp = input("Ingrese el error o presione enter para dejarlo igual: ")
+        errorMax = float(str(errorMax) if(temp=="") else temp)
+        os.system("cls")
+        imprimir()
+        temp = input("Ingrese el número de iteraciones máximas o presione enter para dejarlo igual: ")
+        iterMax = int(str(iterMax) if(temp=="") else temp)
+    os.system("cls")
     x = np.linspace(xl, xu, 500)
     try:
         y = eval(f)
@@ -27,7 +47,15 @@ def grafica(f):
     while len(iteraciones) < iterMax:
         xr = (xl + xu) / 2
         iteraciones.append((xl, xu, xr))
-        fr = funcion(f, xr)
+        try:
+            fr = funcion(f, xr)
+        except ZeroDivisionError:
+            print()
+            print(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print(" !!!!!!!!!!!Division para cero!!!!!!!!!!!!!!!!")
+            print(" !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print()
+            break
         if funcion(f, xl) * fr < 0:
             xu = xr
         else:
@@ -72,16 +100,20 @@ def biseccion(f):
     if(v.upper()=="S"):
         os.system("cls")
         imprimir()
-        xl = float(input("Ingrese el límite inferior: "))
+        temp = input("Ingrese el límite inferior o presione enter para dejarlo igual: ")
+        xl = float(str(xl) if(temp=="") else temp)
         os.system("cls")
         imprimir()
-        xu = float(input("Ingrese el límite superior: "))
+        temp = input("Ingrese el límite superior o presione enter para dejarlo igual: ")
+        xu = float(str(xu) if(temp=="") else temp)
         os.system("cls")
         imprimir()
-        errorMax = float(input("Ingrese el error: "))
+        temp = input("Ingrese el error o presione enter para dejarlo igual: ")
+        errorMax = float(str(errorMax) if(temp=="") else temp)
         os.system("cls")
         imprimir()
-        iterMax = int(input("Ingrese el número de iteraciones máximas: "))
+        temp = input("Ingrese el número de iteraciones máximas o presione enter para dejarlo igual: ")
+        iterMax = int(str(iterMax) if(temp=="") else temp)
     os.system("cls")
     imprimir()
     iter = 0
@@ -92,6 +124,11 @@ def biseccion(f):
         try:
             fr = funcion(f, xr)
         except ZeroDivisionError:
+            print()
+            print("                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print("                    !!!!!!!!!!!Division para cero!!!!!!!!!!!!!!!!")
+            print("                    !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+            print()
             break
         if funcion(f,xl) * fr < 0:
             xu = xr
