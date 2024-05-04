@@ -1,15 +1,16 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import os
+import getpass
 
-xl = -10
-xu = 10
+
+xl = 0.5
+xu = 2.5
 errorMax = 1
 iterMax = 10
-editado = False
 
 def grafica(f):
-    
+    global xl, xu, errorMax, iterMax
     x = np.linspace(xl, xu, 500)
     try:
         y = eval(f)
@@ -20,7 +21,27 @@ def grafica(f):
     plt.xlabel('x')
     plt.ylabel('y')
     plt.title('Gráfica de ' + f)
+    
+    # Realizar la bisección
+    iteraciones = []
+    while len(iteraciones) < iterMax:
+        xr = (xl + xu) / 2
+        iteraciones.append((xl, xu, xr))
+        fr = funcion(f, xr)
+        if funcion(f, xl) * fr < 0:
+            xu = xr
+        else:
+            xl = xr
+        error = abs((xu - xl) / xu) * 100
+        if error < errorMax:
+            break
+    
+    # Dibujar las líneas verticales para cada iteración
+    for i, (xl_i, xu_i, xr_i) in enumerate(iteraciones):
+        plt.axvline(x=xr_i, color='r', linestyle='--', label=f"Iteración {i+1}: xr={xr_i:.4f}")
+    
     plt.grid(True)
+    plt.legend()
     plt.show()
     
 def funcion(f,x):
@@ -37,6 +58,12 @@ def imprimir():
     print("|------------------------------------------------|")
     print()
     
+def limpiar_valores():
+    global xl, xu, errorMax, iterMax
+    xl = -10
+    xu = 10
+    errorMax = 1
+    iterMax = 10
     
 def biseccion(f):
     global xl, xu, errorMax, iterMax
@@ -62,7 +89,10 @@ def biseccion(f):
     print("------------------------------------------------------------------------------------")
     while iter < iterMax:
         xr = (xl + xu) / 2
-        fr = funcion(f,xr)
+        try:
+            fr = funcion(f, xr)
+        except ZeroDivisionError:
+            break
         if funcion(f,xl) * fr < 0:
             xu = xr
         else:
@@ -72,5 +102,6 @@ def biseccion(f):
         print(f"{iter:9d}  {xl:9.4f}  {xu:9.4f}  {xr:9.4f}  {funcion(f, xl):9.4f}  {funcion(f, xu):9.4f}  {fr:9.4f}  {error:9.4f}")
         if error < errorMax:
             break
-    input("Presione enter para continuar")
+    getpass.getpass("Presione enter para continuar")
     os.system("cls")
+    limpiar_valores()
