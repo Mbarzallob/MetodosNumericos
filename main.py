@@ -136,7 +136,6 @@ opciones = {
     }
 }
 os.system("cls")
-editarFuncion()
 opcion = [-1, -1, -1]
 while opcion[0] != 0:
     opcion[1] = -1
