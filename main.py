@@ -2,6 +2,12 @@ import biseccion as bis
 import falsaPosicion as fp
 import newtonRaphson as nr
 import secante as sec
+import regresionlineal as rl
+import regresionpolinomial as rp
+import logaritmico as l
+import lagrange as lag
+import polinomial as p
+import trazadorescubicos as tc
 import matplotlib.pyplot as plt
 import numpy as np
 import os
@@ -78,6 +84,54 @@ opciones = {
                     2: sec.secante
                 }
             }
+        }
+    },
+    3: {
+        "nombre": "Interpolaciones",
+        "submenus": {
+            1:{
+                "nombre": "Regresion lineal         ", 
+                "funciones": {
+                    1: rl.grafica,
+                    2: rl.lineal
+                }
+            },
+            2: {
+                "nombre": "Regresion polinomica             ", 
+                "funciones": {
+                    1: rp.grafica,
+                    2: rp.regresionPolinomial
+                }
+            },
+            3: {
+                "nombre": "Regresion de potencias             ", 
+                "funciones": {
+                    1: p.grafica,
+                    2: p.polinomial
+                }
+            },
+            4: {
+                "nombre": "Regresion logaritmica             ", 
+                "funciones": {
+                    1: l.grafica,
+                    2: l.logaritmico
+                }
+            },
+            5: {
+                "nombre": "Trazadores cubicos             ", 
+                "funciones": {
+                    1: tc.grafica,
+                    2: tc.trazadoresCubicos
+                }
+            },
+            6: {
+                "nombre": "Lagrange             ", 
+                "funciones": {
+                    1: lag.grafica,
+                    2: lag.lagrange
+                }
+            },
+            
         }
     }
 }
