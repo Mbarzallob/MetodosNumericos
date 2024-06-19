@@ -13,7 +13,6 @@ import numpy as np
 import os
 import math
 
-# Global variable for the function
 f = ""
 
 def display_menu(title, options):

@@ -64,7 +64,7 @@ def lagrange(f):
     n = len(puntos_x)
     polinomio = ""
 
-    if metodo == '1':  # Normal
+    if metodo == '1':  
         for i in range(n):
             L_i = f"L_{i}(x) = "
             numerador = ""
@@ -83,7 +83,7 @@ def lagrange(f):
                 polinomio += f"{puntos_y[i]} * {numerador} / {denominador} + "
             else:
                 polinomio += f"{puntos_y[i]} * {numerador} / {denominador}"
-    else:  # Inverso
+    else:  
         for i in range(n):
             L_i = f"L_{i}(x) = "
             numerador = ""

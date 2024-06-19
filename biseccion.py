@@ -3,7 +3,6 @@ import numpy as np
 import os
 import getpass
 
-# Global variables
 xl = -10
 xu = 10
 errorMax = 1
@@ -31,7 +30,6 @@ def grafica(funcion=None):
     plt.ylabel('y')
     plt.title('Gráfica de ' + funcion)
     
-    # Realizar la bisección
     iteraciones = []
     while len(iteraciones) < iterMax:
         xr = (xl + xu) / 2
@@ -51,7 +49,6 @@ def grafica(funcion=None):
         if error < errorMax:
             break
     
-    # Dibujar las líneas verticales para cada iteración
     for i, (xl_i, xu_i, xr_i) in enumerate(iteraciones):
         plt.axvline(x=xr_i, color='r', linestyle='--', label=f"Iteración {i+1}: xr={xr_i:.4f}")
     
