@@ -63,5 +63,5 @@ x_data = np.array([1, 2, 3, 4, 5, 6, 7, 8])
 y_data = np.array([2.5, 7, 38, 55, 61, 122, 83, 145])
 interpolacion = np.array([1, 2, 3, 4, 5])
 
-logaritmico(x_data, y_data, interpolacion)
-grafica(x_data, y_data, interpolacion)
+#logaritmico(x_data, y_data, interpolacion)
+#grafica(x_data, y_data, interpolacion)
