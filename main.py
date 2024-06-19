@@ -13,40 +13,95 @@ import numpy as np
 import os
 import math
 
-
+# Global variable for the function
 f = ""
 
-def imprimirMetodos():
+def display_menu(title, options):
+    os.system("cls")
     print("\n|------------------------------------------------|")
-    print(f"|               {opciones[opcion[0]]['submenus'][opcion[1]]['nombre']}|")
+    print(f"|                {title}                 |")
     print("|               ELIJA UNA OPCION:                |")
-    print("|------------------------------------------------|\n")
-    print(" 1. Grafica")
-    print(" 2. Metodo")
+    print("|------------------------------------------------|")
+    for i, option in enumerate(options):
+        print(f" {i + 1}. {option['nombre']}")
     print(" 0. Salir")
+    while True:
+        try:
+            choice = int(input("\n Ingrese su eleccion: "))
+            if 0 <= choice <= len(options):
+                return choice
+            else:
+                print("Por favor, elija una opción válida.")
+        except ValueError:
+            print("Entrada no válida. Por favor ingrese un número.")
 
 def graficarFuncion(f):
     x = np.linspace(-10, 10, 400)
     try:
         y = eval(f)
+        plt.plot(x, y)
+        plt.xlabel('x')
+        plt.ylabel('y')
+        plt.title(f'Gráfica de {f}')
+        plt.grid(True)
+        plt.show()
     except:
         print("Error: La expresión ingresada no es válida.")
-        exit()
-    plt.plot(x, y)
-    plt.xlabel('x')
-    plt.ylabel('y')
-    plt.title('Gráfica de ' + f)
-    plt.grid(True)
-    plt.show()
 
 def editarFuncion():
     global f
+    os.system("cls")
     print("\n|------------------------------------------------|")
     print("|                      FUNCIÓN                   |")
     print("|------------------------------------------------|")
     f = input("\n Ingrese la funcion con respecto a x: ")
     os.system("cls")
-    
+
+def execute_option(option, submenu, f):
+    while True:
+        os.system("cls")
+        print(f"\n|------------------------------------------------|")
+        print(f"|               {submenu['nombre']}|")
+        print("|               ELIJA UNA OPCION:                |")
+        print("|------------------------------------------------|\n")
+        print(" 1. Grafica")
+        print(" 2. Metodo")
+        print(" 0. Salir")
+        choice = display_menu(submenu['nombre'], [{"nombre": "Grafica"}, {"nombre": "Metodo"}])
+        if choice == 0:
+            break
+        submenu['funciones'][choice](f)
+
+def main_menu(opciones):
+    global f
+    while True:
+        os.system("cls")
+        print("\n|------------------------------------------------|")
+        print("|                Menu principal                  |".upper())
+        print("|               ELIJA UNA OPCION:                |")
+        print("|------------------------------------------------|")
+        print(f"            FUNCIÓN: {f}\n")
+        main_options = [{"nombre": "Editar la funcion"}, {"nombre": "Graficar la funcion"}] + [{"nombre": opciones[i]["nombre"]} for i in opciones]
+        option = display_menu("Menu principal", main_options)
+
+        if option == 0:
+            break
+        elif option == 1:
+            editarFuncion()
+        elif option == 2:
+            graficarFuncion(f)
+        else:
+            submenu_index = option - 3
+            if submenu_index < 0 or submenu_index >= len(opciones):
+                continue
+            selected_option = list(opciones.values())[submenu_index]
+            while True:
+                submenu_option = display_menu(selected_option["nombre"], [{"nombre": sub["nombre"]} for sub in selected_option["submenus"].values()])
+                if submenu_option == 0:
+                    break
+                submenu = selected_option["submenus"][submenu_option]
+                execute_option(option, submenu, f)
+
 opciones = {
     1: {
         "nombre": "Metodos cerrados",
@@ -135,50 +190,5 @@ opciones = {
         }
     }
 }
-os.system("cls")
-opcion = [-1, -1, -1]
-while opcion[0] != 0:
-    opcion[1] = -1
-    opcion[2] = -1
-    print("\n|------------------------------------------------|")
-    print("|                Menu principal                  |".upper())
-    print("|               ELIJA UNA OPCION:                |")
-    print("|------------------------------------------------|")
-    print(f"            FUNCIÓN: {f}\n")
-    for i in opciones:
-        print(" "+str(i) + ". " + opciones[i]["nombre"])
-    print(" 3. Editar la funcion")
-    print(" 4. Graficar la funcion")
-    print(" 0. Salir")
-    opcion[0] = int(input("\n Ingrese su eleccion: "))
-    os.system("cls")
-    if(opcion[0] == 3):
-        editarFuncion()
-    elif(opcion[0] ==0):
-        break
-    elif(opcion[0]==4):
-        graficarFuncion(f)
-    else:
-        while opcion[1] != 0:
-            opcion[2] = -1
-            print("\n|------------------------------------------------|")
-            print(f"|               {opciones[opcion[0]]['nombre']}                 |")
-            print("|               ELIJA UNA OPCION:                |")
-            print("|------------------------------------------------|\n")
-            for i in opciones[opcion[0]]['submenus']:
-                print(" "+str(i) + ". " + opciones[opcion[0]]['submenus'][i]['nombre'])
-            print(" 0. Regresar")
-            opcion[1] = int(input("\n Ingrese su eleccion: "))
-            os.system('cls')
-            if(opcion[1]==0):
-                break
-            while opcion[2]!=0:
-                imprimirMetodos()
-                opcion[2] = int(input("\n Ingrese su eleccion: "))
-                os.system('cls')
-                if(opcion[2]!=0):
-                    opciones[opcion[0]]['submenus'][opcion[1]]['funciones'][opcion[2]](f)
 
-                        
-                        
-    
+main_menu(opciones)
