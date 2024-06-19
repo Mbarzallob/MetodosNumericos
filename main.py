@@ -6,7 +6,7 @@ import regresionlineal as rl
 import regresionpolinomial as rp
 import logaritmico as l
 import lagrange as lag
-import polinomial as p
+import potencia as p
 import trazadorescubicos as tc
 import matplotlib.pyplot as plt
 import numpy as np
@@ -162,7 +162,7 @@ opciones = {
                 "nombre": "Regresion de potencias             ", 
                 "funciones": {
                     1: p.grafica,
-                    2: p.polinomial
+                    2: p.potencias,
                 }
             },
             4: {
