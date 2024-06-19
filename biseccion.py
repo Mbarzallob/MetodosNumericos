@@ -3,28 +3,33 @@ import numpy as np
 import os
 import getpass
 
-
+# Global variables
 xl = -10
 xu = 10
 errorMax = 1
 iterMax = 10
+f = ""
 
-def grafica(f):
-    global xl, xu, errorMax, iterMax
+def grafica(funcion=None):
+    global xl, xu, errorMax, iterMax, f
+    if not funcion:
+        if not f:
+            f = input("Ingrese la función con respecto a x: ")
+        funcion = f
     imprimir()
     v = input("DESEA EDITAR LOS VALORES INICIALES (s): ")
-    if(v.upper() == "S"):
+    if v.upper() == "S":
         editar_valores()
     x = np.linspace(xl, xu, 500)
     try:
-        y = eval(f)
+        y = eval(funcion)
     except:
         print("Error: La expresión ingresada no es válida.")
         return
     plt.plot(x, y)
     plt.xlabel('x')
     plt.ylabel('y')
-    plt.title('Gráfica de ' + f)
+    plt.title('Gráfica de ' + funcion)
     
     # Realizar la bisección
     iteraciones = []
@@ -32,13 +37,13 @@ def grafica(f):
         xr = (xl + xu) / 2
         iteraciones.append((xl, xu, xr))
         try:
-            fr = funcion(f, xr)
+            fr = eval(funcion.replace("x", str(xr)))
         except ZeroDivisionError:
             print("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             print("!!!!!!!!!!! División por cero !!!!!!!!!!!!!!!")
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
             break
-        if funcion(f, xl) * fr < 0:
+        if eval(funcion.replace("x", str(xl))) * fr < 0:
             xu = xr
         else:
             xl = xr
@@ -54,10 +59,8 @@ def grafica(f):
     plt.legend()
     plt.show()
 
-def funcion(f, x):
-    return eval(f)
-
 def imprimir():
+    global xl, xu, errorMax, iterMax
     print("|------------------------------------------------|")
     print("|                   Bisección                    |")
     print("|------------------------------------------------|")
@@ -86,11 +89,15 @@ def editar_valores():
     temp = input("Ingrese el número de iteraciones máximas o presione enter para dejarlo igual: ")
     iterMax = int(temp) if temp else iterMax
 
-def biseccion(f):
-    global xl, xu, errorMax, iterMax
+def biseccion(funcion=None):
+    global xl, xu, errorMax, iterMax, f
+    if not funcion:
+        if not f:
+            f = input("Ingrese la función con respecto a x: ")
+        funcion = f
     imprimir()
     v = input("DESEA EDITAR LOS VALORES INICIALES (s): ")
-    if(v.upper() == "S"):
+    if v.upper() == "S":
         editar_valores()
     imprimir()
     iter = 0
@@ -99,19 +106,19 @@ def biseccion(f):
     while iter < iterMax:
         xr = (xl + xu) / 2
         try:
-            fr = funcion(f, xr)
+            fr = eval(funcion.replace("x", str(xr)))
         except ZeroDivisionError:
             print("\n!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
             print("!!!!!!!!!!! División por cero !!!!!!!!!!!!!!!")
             print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!\n")
             break
-        if funcion(f, xl) * fr < 0:
+        if eval(funcion.replace("x", str(xl))) * fr < 0:
             xu = xr
         else:
             xl = xr
         error = abs((xu - xl) / xu) * 100
         iter += 1
-        print(f"{iter:9d}  {xl:9.4f}  {xu:9.4f}  {xr:9.4f}  {funcion(f, xl):9.4f}  {funcion(f, xu):9.4f}  {fr:9.4f}  {error:9.4f}")
+        print(f"{iter:9d}  {xl:9.4f}  {xu:9.4f}  {xr:9.4f}  {eval(funcion.replace('x', str(xl))):9.4f}  {eval(funcion.replace('x', str(xu))):9.4f}  {fr:9.4f}  {error:9.4f}")
         if error < errorMax:
             break
     getpass.getpass("Presione enter para continuar")
