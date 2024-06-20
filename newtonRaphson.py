@@ -4,9 +4,39 @@ from tabulate import tabulate
 import numpy as np
 import matplotlib.pyplot as plt
 
+funcion = 'x**3-2*x-5'
+
+def elegir_funcion():
+    global funcion
+    
+    print("Funciones para Newton Raphson: ")
+    print(" 0. Ingresar función")
+    print(" 1. sin(x) - x/2")
+    print(" 2. ln(x) - 1")
+    print(" 3. x**3 - x - 2")
+    print(" 4. Funcion por defecto: x**3 - 2*x - 5")
+    
+    respuesta = int(input("Ingrese una opción: "))
+    
+    if respuesta == 0:
+        funcion = input("Ingrese la función (use 'x' como variable): ")
+    elif respuesta == 1:
+        funcion = 'sin(x) - x/2'
+    elif respuesta == 2:
+        funcion = 'ln(x) - 1'
+    elif respuesta == 3:
+        funcion = 'x**3 - x - 2'
+    else:
+        funcion = 'x**3 - 2*x - 5'
+    
+    print("F(x)= ", funcion)
+
+
 
 # Metodo de Newton Raphson
-def newtonRaphson(funcion):
+def newtonRaphson(f =None):
+    global funcion
+    elegir_funcion()
     x = sp.Symbol('x')
     f = sp.sympify(funcion)
     f_derivada = sp.diff(f, x)
@@ -22,7 +52,7 @@ def newtonRaphson(funcion):
     
     tabla = []  # Lista para almacenar los datos de cada iteración
     
-    iteracion = 0
+    iteracion =1 
     x_actual = valor_inicial
     
     while iteracion < max_iter:
@@ -69,32 +99,33 @@ def newtonRaphson(funcion):
     print(tabulate(tabla, headers=encabezado, tablefmt="grid"))
 
 
-def grafica(f):
+
+def grafica(f = None):
+    global funcion
+    
     # Convertir la cadena de texto en una expresión SymPy
     x = sp.symbols('x')
-    funcion = sp.sympify(f)
+    f = sp.sympify(funcion)
+    
+    # Solicitar al usuario que ingrese el valor cercano a la raíz
     valor = float(input("Ingrese el valor cercano a la raíz: "))
-
+    
     # Evaluar la función en puntos cercanos al valor específico
     puntos_x = np.linspace(valor - 5, valor + 5, 100)
-    puntos_y = [sp.N(funcion.subs(x, punto)) for punto in puntos_x]
-
-    # Convertir los resultados a arrays de numpy para graficar
-    puntos_x = np.array(puntos_x)
-    puntos_y = np.array(puntos_y)
-
+    puntos_y = np.array([sp.N(f.subs(x, punto)) for punto in puntos_x])
+    
     # Graficar la función
-    plt.plot(puntos_x, puntos_y, label='Función: ' + f)
-
+    plt.plot(puntos_x, puntos_y, label='Función: ' + funcion)
+    
     # Marcar el punto específico
-    plt.scatter([valor], [funcion.subs(x, valor)], color='red', label='Punto específico')
-
+    plt.scatter([valor], [float(f.subs(x, valor))], color='red', label='Punto específico')
+    
     # Configurar la leyenda y etiquetas
     plt.xlabel('x')
     plt.ylabel('f(x)')
     plt.title('Gráfico de la función alrededor del punto dado')
     plt.legend()
-
+    
     # Mostrar el gráfico
     plt.grid(True)
     plt.show()
