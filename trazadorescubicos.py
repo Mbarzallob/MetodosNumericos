@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from scipy.interpolate import CubicSpline
 from tabulate import tabulate
-
+import getpass
+import os
 # Nuevos datos de prueba
 x_data = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 y_data = [0, 0.5, 2, 1.5, 0.5, 0, -0.5, -1.5, -2]
@@ -35,6 +36,7 @@ def grafica(f=None):
     plt.show()
 
 def trazadoresCubicos(f=None):
+    os.system("cls")
     global x_data, y_data, interpolacion
     pedir_datos()
     cs = CubicSpline(x_data, y_data)
@@ -47,16 +49,20 @@ def evaluar_trazadoresCubicos(cs, interpolar):
     return np.column_stack((interpolar, resultados))
 
 def imprimir_trazadoresCubicos(cs):
+    os.system("cls")
     print("\nTrazadores cúbicos generados:")
     for i in range(len(cs.c.T)):
         c = cs.c.T[i]
         print(f"Para el intervalo [{x_data[i]}, {x_data[i+1]}]:")
         print(f"Coeficientes: {c[0]} + {c[1]}*(x - {x_data[i]}) + {c[2]}*(x - {x_data[i]})^2 + {c[3]}*(x - {x_data[i]})^3")
+    getpass.getpass("Presione enter para continuar con los valores interpolados:")
 
 def imprimirInterpolacion(tabla):
+    os.system("cls")
     print("\nVALORES INTERPOLADOS")
     encabezado = [" (x) ", "RESULTADOS f(x)"]
     print(tabulate(tabla, headers=encabezado, tablefmt="grid"))
+    getpass.getpass("Presion Enter para continuar:")
 
 def imprimirArray(array):
     print(", ".join(map(str, array)))

@@ -5,8 +5,8 @@ import math
 import os
 import getpass
 
-x0= 0
-x1 = 1
+x0= -2
+x1 = 2
 e = 0.01
 N = 10
 raiz = None
@@ -57,7 +57,7 @@ def secante(funcion=None):
         root = optimize.root_scalar(lambda x: f(x, funcion), bracket=[x0, x1], method='brentq')
     except Exception as ex:
         print (f"Error: {ex}")
-        return
+        getpass.getpass("Presion enter para continuar")
     
     condition = True
     step = 1

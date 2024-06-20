@@ -1,7 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tabulate import tabulate
-
+from getpass import getpass
+import os
 # Nuevos datos de prueba
 x_data = [0, 1, 2, 3, 4, 5, 6, 7, 8]
 y_data = [0, 0.5, 2, 1.5, 0.5, 0, -0.5, -1.5, -2]
@@ -35,6 +36,7 @@ def grafica(f=None):
     plt.show()
 
 def lineal(f=None):
+    os.system("cls")
     global x_data, y_data, interpolacion
     pedir_datos()
     a, b = coeficientes_AB_lineal(x_data, y_data)
@@ -57,6 +59,7 @@ def coeficientes_AB_lineal(x, y):
     return round(a, 4), round(b, 4)
 
 def imprimir_lineal(a, b):
+    os.system("cls")
     print()
     print("-----------------------------------------------------")
     print("|                  FUNCION ENCONTRADA               |")
@@ -65,11 +68,14 @@ def imprimir_lineal(a, b):
     print("-----------------------------------------------------")
     print(f"     VALOR DE A = {a}, VALOR DE B = {b}")
     print("-----------------------------------------------------")
+    getpass("Presion enter para continuar con los valores interpolados")
 
 def imprimirInterpolacion(tabla):
+    os.system("cls")
     print("\nVALORES INTERPOLADOS")
     encabezado = [" (x) ", "RESULTADOS f(x)"]
     print(tabulate(tabla, headers=encabezado, tablefmt="grid"))
+    getpass("Presione enter para continuar:")
 
 def evaluar_lineal(a, b, interpolar):
     interpolar = np.array(interpolar)
