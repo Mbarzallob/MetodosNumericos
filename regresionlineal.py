@@ -91,16 +91,28 @@ def pedir_datos():
     imprimirArray(y_data)
     print("Datos a interpolar:")
     imprimirArray(interpolacion)
-    print("\n¿Desea cambiarlos?")
-    respuesta = int(input("1. Sí\n2. No\n"))
+    print("\n¿Qué desea hacer?")
+    print("1. Cambiar los datos existentes")
+    print("2. Volver a los datos originales")
+    print("0. Salir")
+    respuesta = int(input("Ingrese su elección: "))
     if respuesta == 1:
-        x_data = list(map(float, input("Ingrese los valores de x separados por comas: ").split(',')))
-        y_data = list(map(float, input("Ingrese los valores de y separados por comas: ").split(',')))
-        interpolacion = list(map(float, input("Ingrese los valores de interpolar separados por comas: ").split(',')))
-        if len(x_data) > MAX_NUMBERS or len(y_data) > MAX_NUMBERS or len(interpolacion) > MAX_NUMBERS:
-            print(f"El número máximo de entradas permitidas es {MAX_NUMBERS}. Por favor, intente de nuevo con menos datos.")
-            return
-        x_data, y_data, interpolacion = np.array(x_data), np.array(y_data), np.array(interpolacion)
+        while True:
+            try:
+                nuevos_x = list(map(float, input("Ingrese los nuevos valores de x separados por comas: ").split(',')))
+                nuevos_y = list(map(float, input("Ingrese los nuevos valores de y separados por comas: ").split(',')))
+                if len(nuevos_x) != len(nuevos_y):
+                    raise ValueError("La cantidad de valores en y debe ser igual a la cantidad de valores en x.")
+                x_data = np.array(nuevos_x)
+                y_data = np.array(nuevos_y)
+                break
+            except ValueError as e:
+                print(f"Error: {e}. Por favor, ingrese los valores nuevamente.")
+    elif respuesta == 2:
+        x_data = [0, 1, 2, 3, 4, 5, 6, 7, 8]
+        y_data = [0, 0.5, 2, 1.5, 0.5, 0, -0.5, -1.5, -2]
+        interpolacion = [0.5, 1.5, 2.5, 3.5, 4.5, 5.5, 6.5, 7.5]
+        print("Datos originales restaurados.")
     else:
-        print("Datos no cambiados...")
-        x_data, y_data, interpolacion = np.array(x_data), np.array(y_data), np.array(interpolacion)
+        print("Saliendo...")
+        return
