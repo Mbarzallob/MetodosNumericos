@@ -3,6 +3,7 @@ import sympy as sp
 from tabulate import tabulate
 import numpy as np
 import matplotlib.pyplot as plt
+import getpass
 
 funcion = 'x**3-2*x-5'
 
@@ -97,6 +98,7 @@ def newtonRaphson(f =None):
     encabezado = ["ITERACION",  "VALOR APROXIMADO"," f(x) ", "df(x)", "ERROR APROXIMADO", "ERROR APROXIMADO %"]
     
     print(tabulate(tabla, headers=encabezado, tablefmt="grid"))
+    getpass.getpass("Presione enter para continuar")
 
 
 

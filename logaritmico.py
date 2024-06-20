@@ -1,6 +1,8 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tabulate import tabulate
+import getpass
+
 
 # Datos de prueba
 x_data = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -34,6 +36,7 @@ def logaritmica(f= None):
     imprimir_logaritmica(a, b)
     res_interpolacion = evaluar_logaritmica(a, b, interpolacion)
     imprimirInterpolacion(res_interpolacion)
+    getpass.getpass("Presione enter para continuar")
 
 def coeficientes_AB_logaritmica(x, y):
     X = np.log(x)

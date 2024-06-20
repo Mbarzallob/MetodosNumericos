@@ -58,7 +58,7 @@ def editarFuncion():
 
 def execute_option(option, submenu, f):
     while True:
-        #os.system("cls")
+        os.system("cls")
         print(f"\n|------------------------------------------------|")
         print(f"|               {submenu['nombre']}|")
         print("|               ELIJA UNA OPCION:                |")
@@ -161,14 +161,14 @@ opciones = {
                 "nombre": "Regresion de potencias             ", 
                 "funciones": {
                     1: p.grafica,
-                    2: p.potencias,
+                    2: p.potencia,
                 }
             },
             4: {
                 "nombre": "Regresion logaritmica             ", 
                 "funciones": {
                     1: l.grafica,
-                    2: l.logaritmico
+                    2: l.logaritmica
                 }
             },
             5: {

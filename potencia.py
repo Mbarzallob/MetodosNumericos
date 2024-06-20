@@ -1,6 +1,7 @@
 import numpy as np
 import matplotlib.pyplot as plt
 from tabulate import tabulate
+import getpass
 
 # Datos de prueba
 x_data = [1, 2, 3, 4, 5, 6, 7, 8]
@@ -29,10 +30,12 @@ def grafica(f= None):
 
 def potencia(f= None):
     global x_data, y_data, interpolacion
+    pedir_datos()
     a, b = coeficientes_AB_potencia(x_data, y_data)
     imprimir_potencia(a, b)
     res_interpolacion = evaluar_potencia(a, b, interpolacion)
     imprimirInterpolacion(res_interpolacion)
+    getpass.getpass("Presione enter para continuar")
 
 
 def imprimirArray(array):
