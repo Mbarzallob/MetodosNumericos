@@ -58,7 +58,7 @@ def editarFuncion():
 
 def execute_option(option, submenu, f):
     while True:
-        os.system("cls")
+        #os.system("cls")
         print(f"\n|------------------------------------------------|")
         print(f"|               {submenu['nombre']}|")
         print("|               ELIJA UNA OPCION:                |")
