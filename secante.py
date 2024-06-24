@@ -12,11 +12,18 @@ es = 0.01
 imax = 10
 fu= ""
 
-def Secant(funcion=None):
+
+
+def secante(funcion=None):
     global x0, x1, es, imax, fu, xr
     if not funcion:
         if not fu:
             fu = input("Ingrese la función con respecto a x: ")
+        else:
+            editar_funcion = input("¿Desea editar la función existente? (s): ")
+            if editar_funcion.upper() == "S":
+                fu = input("Ingrese la función con respecto a x: ")
+        
         funcion = fu
     imprimir()
     v = input("DESEA EDITAR LOS VALORES INICIALES (s): ")
@@ -27,27 +34,30 @@ def Secant(funcion=None):
     iter = 0
     xr = x1
     print("Iteración      x0          x1          xr         f(x0)        f(x1)       Ea%")
-    while True:
+    co = True
+    while co == True:
         xrold = xr
         if f(x1,funcion) - f(x0, funcion) == 0:
             print("Division by zero error!")
-            break
-        xr = x1 - f(x1,funcion) * (x1 - x0) / (f(x1,funcion) - f(x0, funcion))
-        iter += 1
-        if xr != 0:
-            ea = abs((xr - xrold) / xr) * 100
+            co = False
+        else:
+            xr = x1 - f(x1,funcion) * (x1 - x0) / (f(x1,funcion) - f(x0, funcion))
+            iter += 1
+            if xr != 0:
+                ea = abs((xr - xrold) / xr) * 100
+            print("{:<12}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}".format(iter, x0, x1,xr, f(x0,funcion), f(x1, funcion), ea))
+            if ea < es or iter >= imax:
+                #break
+                co = False
 
-        #print(f"Iteration: {iter}, xr: {xr}, ea: {ea}%")
-        #print(f"Iteracion: {iter}, x0: {x0}, x1: {x1}, xr: {xr}, f(x0): {f(x0)},  f(x1): {f(x1)}")
-        #print("{:<12}{:<12.6f}{:<12.6f}{:<12.6f}".format(step, x2, fx2, etp))
-        print("{:<12}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}{:<12.6f}".format(iter, x0, x1,xr, f(x0,funcion), f(x1, funcion), ea))
-        if ea < es or iter >= imax:
-            break
-        x0, x1 = x1, xr
+            x0, x1 = x1, xr
     #return xr, iter, ea
     print(f"\nRoot: {xr}")
     print(f"Iterations: {iter}")
     print(f"Final Approximate Error: {ea}%")
+
+    limpiar_valores()
+    getpass.getpass("Presione enter para continuar")
 
 def imprimir():
     global x0, x1, es, imax 
@@ -70,6 +80,13 @@ def editar_valores():
     es = float(temp) if temp else es
     temp = input("Ingrese el número de iteraciones máximas o presione enter para dejarlo igual: ")
     imax = int(temp) if temp else imax
+
+def limpiar_valores(funcion = None):
+    global x0, x1, es, imax
+    x0 = 0
+    x1 = 1
+    es = 0.01
+    imax = 10
 
 
 def f(x, funcion):
