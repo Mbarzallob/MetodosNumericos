@@ -144,5 +144,5 @@ def grafica(funcion=None):
     plt.show()
 
 # Llamada a la función
-richardson()
-grafica()
+# richardson()
+# grafica()
